@@ -1,0 +1,13 @@
+Data:-
+Divide Data in m-n spilt (m% for train and n% for test)
+Select the Alogrithm to work on (should be drop down menu) for now only option is Decision Tree
+Do AutoSegmentation on the Training set i.e get score for each features categories
+Set Cutoff where we define the minimum population for the category to get selected if minimum population doesn't match then don't show that feature
+Note:-keep this feature optional ask the user if its needs to setup a cutoff if yes then only use the cutoff feature
+Select the best segmented Category manually
+create a seperate dataframe with only data having value as in category for e.g if category is male create seperate df which only inclue male
+and on another DF which include values except of selected category for e.g Male and perform the above STEPS from line 4 again by passing the excluded selected category df
+perform this iteration till user manually say stop. if user say stop it means at that iteration user will not select any category.
+so now lets say we have 4 iteration 1:-Male.2:-AGE>30.3:-Married.4:-rest of data(data when user told to stop)
+Now train 4 decision tree on this 4 dataset
+Now iterate the test dataset rows 1 by 1 in which if any category is from above 3 category then predict that category model or predict its value from the rest of data model
