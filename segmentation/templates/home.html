@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flask Form Example</title>
+  </head>
+  <body>
+    <h1>Input Train Test Split for dataset</h1> 
+    <form method="POST" action="{{ url_for('submit_form') }}">
+        <label for="dataset_path">Pass dataset directory path from dataset directory</label>
+        <input type="text" name="dataset_path" id="dataset_path"><br><br>
+        <label for="dataset_path">dataset type</label>
+        <select id="file_type" name="file_type">
+            {% for file_type in file_type_available %}
+              <option value="{{ file_type }}">{{ file_type }}</option>
+            {% endfor %}
+          </select><br><br>
+        <label for="train_test_file">Already have split data? click the box to pass train and test file name
+            else leave it blank and pass the train split and test split percentage
+        </label>
+		<input type="checkbox" name="train_test_file" id="train_test_file" onchange="showInput()">
+
+		<div id="train_test_file_name" style="display: none;">
+			<label for="train_file">Training Set File name</label>
+			<input type="text" name="train_file" id="train_file"><br>
+            <label for="test_file">Testing Set File name</label>
+			<input type="text" name="test_file" id="test_file"><br>
+		</div>  
+
+        <div id="train_test_percentage" style="display: block;"> 
+            <label for="file_name">Dataset File name:</label>
+            <input type="text" id="file_name" name="file_name"><br>
+            <label for="test_split">Provide Test Split % in float for Example 20% means 0.2 in float, rest will be training data %</label>
+            <input type="float" id="test_split" name="test_split"><br>
+        </div>
+
+      <label for="model">Select Training Model:</label>
+      <select id="model" name="model">
+        {% for model in models_available %}
+          <option value="{{ model }}">{{ model }}</option>
+        {% endfor %}
+      </select><br>
+      <label for="model_parameters">Pass the model parameter in key value pair seperated by comma</label>
+      <input type="text" id="model_parameters" name="model_parameters"><br><br>
+
+      <div id="train_test_percentage" style="display: block;">
+        <h3>AutoSegmenation Parameters</h3> 
+        <label for="target">target:-</label>
+        <input type="text" id="target" name="target"><br>
+        <label for="event">event:-</label>
+        <input type="text" id="event" name="event"><br>
+        <label for="no_of_category">no_of_category :-</label>
+        <input type="number" id="no_of_category" name="no_of_category"><br>
+        <label for="no_of_bucket">no_of_bucket :-</label>
+        <input type="number" id="no_of_bucket" name="no_of_bucket"><br>
+    </div>
+
+      <button type="submit">Submit</button>
+    </form>
+
+
+    <script>
+		function showInput() {
+			var train_test_file = document.getElementById("train_test_file");
+			var trainTestFileName = document.getElementById("train_test_file_name");
+            var trainTestPercentage = document.getElementById("train_test_percentage");
+
+			if (train_test_file.checked) {
+				trainTestFileName.style.display = "block";
+                trainTestPercentage.style.display = "none";
+			} else {
+				trainTestFileName.style.display = "none";
+                trainTestPercentage.style.display = "block";
+			}
+		}
+	</script>
+  </body>
+</html>

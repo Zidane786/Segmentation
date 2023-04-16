@@ -2,16 +2,20 @@ import pandas as pd
 import numpy as np
 
 class AutoSegmentation:
-    def __init__(self,df,no_of_category,target,event,no_of_bucket=10):
+    def __init__(self,df,target,event,no_of_category=10,no_of_bucket=10):
         self.df = df
-        self.no_of_category = no_of_category
+        self.no_of_category = int(no_of_category)
         self.target = target
-        self.event = event
-        self.no_of_bucket = no_of_bucket
+        if event.isdigit():
+            self.event = int(event)
+        else:
+            self.event = event
+        self.no_of_bucket = int(no_of_bucket)
         self.segmentation_df = pd.DataFrame()
         self.column_schema = ['feature','categories','event_rate','volume','event_ratio_volume']
     def object_to_string(self):
         # dtype_change
+        print(type(self.df))
         object_column = self.df.select_dtypes(include='object').columns
         self.df[object_column] = self.df[object_column].astype(pd.StringDtype())
         
@@ -47,8 +51,9 @@ class AutoSegmentation:
             elif 'int' in val or 'float' in val:
                 # print(col,":-",val)
                 event_vol_df = self.calculate_event_and_volume_for_numerical(col,self.target)
-            result_df = result_df.append(event_vol_df)
-
+            # result_df = result_df.append(event_vol_df)
+            result_df = pd.concat([result_df,event_vol_df],axis=0)
+            
         self.segmentation_df = result_df
 
 
@@ -148,3 +153,5 @@ class AutoSegmentation:
         ks_temp["event_ratio_volume"] = ks_temp['event_rate'] / ks_temp['volume']
         return ks_temp
         
+    def __call__(self):
+        return self.segmentation_df
