@@ -153,5 +153,9 @@ class AutoSegmentation:
         ks_temp["event_ratio_volume"] = ks_temp['event_rate'] / ks_temp['volume']
         return ks_temp
         
-    def __call__(self):
-        return self.segmentation_df
+    def __call__(self,cutoff=None):
+        if cutoff == None:
+            return self.segmentation_df.sort_values('event_ratio_volume',ascending=False)
+        else:
+            df_seg = self.segmentation_df.sort_values('event_ratio_volume',ascending=False)
+            return df_seg[df_seg['volume']>=float(cutoff)]
