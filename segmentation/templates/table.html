@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Flask Pandas DataFrame Example</title>
+    <title>Segmented based on features</title>
 </head>
 <body>
     <h1>Segmented Columns</h1>
     <form method="POST" action="{{ url_for('process_form') }}">
         {{ table_html|safe }}
         <br>
-        <button type="submit">Submit</button>
+        <button type="submit" name="segment" value="segment_again">Segment Again</button>
+        <button type="submit" name="segment" value="done">Done</button>   
     </form>
 </body>
 </html>
